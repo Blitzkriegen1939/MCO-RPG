@@ -1,101 +1,77 @@
 import java.util.Random;
 import java.util.Scanner;
+
 /**
  * The 'Battlephase' class represents the battle phase of the game where the player's active creature battles against an enemy.
  */
 public class Battlephase {
     private int enemyHP;
     private int actions;
+    
     Scanner scanner = new Scanner(System.in);
     CreatureList creatureList = new CreatureList();
-    //Inventory inventory = new Inventory(creatureList);
     private Creatures enemy; 
     
     /**
      * Constructs a new Battlephase object with default settings: enemy HP, actions, and an enemy creature.
      */
 
-    public Battlephase(int posArea) {
+     public Battlephase() {
+        //Area area = new Area();
+        //int posArea = area.getintArea();
         enemyHP = 50;
         actions = 3;
-        enemy = creatureList.getRandomEnemyCreatures(posArea);
-
-        System.out.println(enemy);
+        enemy = creatureList.getRandomEnemyCreatures1();
     }
-     /**
-     * Prints the battle phase screen and handles player actions during a battle.
-     *
-     * @param inventory The player's inventory.
-     */
-    public void printBattlePhase(Inventory inventory) {
 
-        System.out.println ("\nYou have encountered an enemy!!\n");
-        System.out.println ("\tBATTLE PHASE\n");
-
-        while (actions > 0 && enemyHP > 0) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");   
-            System.out.println("USER's Active Creature: ");
-            displayCreatureInfo(inventory.getActiveCreature());
-
-            System.out.println ("\n\t--- VS ---");
-        
-            System.out.println("\nEnemy Creature: ");
-            displayCreatureInfo(enemy);
-            System.out.println("Enemy HP: " + enemyHP);
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            System.out.println("What do you want to do?");
-            System.out.println("Actions left: " + actions);
-            System.out.println("[1] Attack");
-            System.out.println("[2] Swap");
-            System.out.println("[3] Catch");
-            System.out.println("[4] Run away");
-            System.out.println("INPUT: ");
-            int input = scanner.nextInt();
-
-            if (input == 1) {
-                System.out.println (inventory.getActiveCreature().getName() + ", attacks the Enemy!");
-                int damage = attack(inventory);
-                if (damage > 0) {
-                System.out.println ("Damage dealt: " + damage);
-                }
-                else {
-                    System.out.println("Out of actions");
-                }
-                actions--;
-            }
-            else if (input == 2) {
-                System.out.println ("\t\t\t\t\t Inventory ");
-                inventory.printInventory();
-                swap(inventory);
-                actions--;
-            }
-            else if (input == 3) {
-                System.out.println("Attempting to catch enemy.");
-                boolean success = catchChanceEnemy(inventory);
-                if (success) {
-                    System.out.println ("Successfully caught enemy!");
-                    enemyHP = 0;    //  to break while loop
-                }
-                else {
-                    System.out.println ("Catch failed.");
-                    actions--;
-                }
-            }
-            else if (input == 4) {
-                System.out.println ("You ran away..");
-                enemyHP = 0;
-            }
-        }       
+    public void battle1(){
+        enemy = creatureList.getRandomEnemyCreatures1();
     }
+    public void battle2(){
+        enemy = creatureList.getRandomEnemyCreatures2();
+    }
+    public void battle3(){
+        enemy = creatureList.getRandomEnemyCreatures3();
+    }
+
     /**
      * Displays information about a creature, including its name, type, and evolution level.
      *
      * @param creature The creature to display information for.
      */
-    public void displayCreatureInfo(Creatures creature) {
-        System.out.println("Name: " + creature.getName());
-        System.out.println("Type: " + creature.getType());
-        System.out.println("Level: " + creature.getEvoLevel());
+    public String enemyName(Creatures creature)
+    {
+        return creature.getName();
+    }
+    public int enemyEL(Creatures creature)
+    {
+        return creature.getEvoLevel();
+    }
+    public String enemyType(Creatures creature)
+    {
+        return creature.getType();
+    }
+    public void updateHealth(){
+        enemyHP = 50;
+    }
+
+    public int getHealth(){
+        return enemyHP;
+    }
+
+    public String displaybattleinfo(Inventory inventory)
+    {
+        return "Enemy Creature"+
+                "\nHealth:" + getHealth() +
+                "\nName:"+ enemyName(enemy) +
+                "\nEL:"+   enemyEL(enemy) +
+                "\nType:"+ enemyType(enemy) +
+                "\n"+
+                "\nActive Creature"+
+                "\nName:"+  enemyName(inventory.getActiveCreature()) +
+                "\nEL:"+    enemyEL(inventory.getActiveCreature()) +
+                "\nType:"+  enemyType(inventory.getActiveCreature()) +
+                "\nMoves:"+ enemyName(inventory.getActiveCreature()) ;
     }
 
 	/**
@@ -122,8 +98,8 @@ public class Battlephase {
      */
     public void swap (Inventory inventory) {           //  NOTE: dont forget to incre decre actions
         if (actions > 0) {
-            inventory.printInventory(); 
-            inventory.ActiveCreatureChange();
+            //inventory.printInventory(); 
+            //inventory.ActiveCreatureChange(int i);
         }
     }
 
@@ -139,14 +115,19 @@ public class Battlephase {
         Random random = new Random();
         int randomNumber = random.nextInt(100) + 1;
         if(randomNumber <= catchChance){
-            System.out.println("You successfully caught the enemy!");
-            inventory.addCreature(enemy);
+            //System.out.println("You successfully caught the enemy!");
+            //inventory.addCreature(enemy);
             return true;
         } else {
-            System.out.println("Failed to catch the enemy.");
+            //System.out.println("Failed to catch the enemy.");
             return false;    
         }
         
+    }
+
+    public void addenemycreature(Inventory inventory)
+    {
+        inventory.addCreature(enemy);
     }
 
     // Run away Method 
@@ -178,6 +159,7 @@ public class Battlephase {
         return damage;
     }
 
+
     /**
      * Determines if one creature is stronger than another based on their types.
      *
@@ -201,6 +183,15 @@ public class Battlephase {
         else {
             return false;
         }
+    }
+
+    public void returnactions(int i)
+    {
+        actions = i;
+    }
+    public int getactions()
+    {
+        return actions;
     }
 
 }

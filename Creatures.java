@@ -12,7 +12,7 @@ public class Creatures {
      * Constructs a 'Creatures' object with specified attributes.
      *
      * @param name     The name of the creature.
-     * @param type     The type of the creature (e.g., Fire, Grass, Water).
+     * @param type     The type of the creature (Fire, Grass, Water).
      * @param family   The family of the creature (A,B,C,D,E,F,G,H,I).
      * @param evolutionLevel The evolution level of the creature (1,2,3).
      */
@@ -68,4 +68,6 @@ public class Creatures {
     public int getCreatureNumber() {
         return creatureNumber;
     }
+
+    
 }

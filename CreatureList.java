@@ -74,10 +74,14 @@ public class CreatureList {
 
     public Creatures getRandomEnemyCreatures(int posArea) {
         
-        int max = 1;
+        int max = 8;
+
 
         ArrayList<Creatures> creatures = new ArrayList<>(); 
 
+
+
+        getCreaturefromList(max);
         switch(posArea){
             case 1:
                 max = 8;
@@ -89,7 +93,6 @@ public class CreatureList {
                 max = 26;
                 break;
         }
-
         getCreaturefromList(max);
         
         if(posArea == 1){
@@ -140,6 +143,67 @@ public class CreatureList {
     
     public char getEnemyCreatureSymbol() {
         return enemyCreatureSymbol;
+    }
+
+    public Creatures getRandomEnemyCreatures1() {
+        int max = 8;
+            getCreaturefromList(max);
+
+
+        ArrayList<Creatures> creatures = new ArrayList<>(); 
+
+
+
+        for (Creatures creature : creatureList) {
+            if (creature.getEvoLevel() == 1  || creature.getEvoLevel() == 2  || creature.getEvoLevel() == 3) {
+                creatures.add(creature);
+            }
+        }
+
+
+
+        Random random = new Random();
+        int randomIndex = random.nextInt(max);
+        return creatures.get(randomIndex);
+    }
+
+    public Creatures getRandomEnemyCreatures2() {
+        int max = 17;
+            getCreaturefromList(max);
+
+
+        ArrayList<Creatures> creatures = new ArrayList<>(); 
+        for (Creatures creature : creatureList) {
+            if (creature.getEvoLevel() == 1 || creature.getEvoLevel() == 2 || creature.getEvoLevel() == 3) {
+                creatures.add(creature);
+            }
+        }
+
+
+
+
+        Random random = new Random();
+        int randomIndex = random.nextInt(max);
+        return creatures.get(randomIndex);
+    }
+
+    public Creatures getRandomEnemyCreatures3() {
+        int max = 26;
+            getCreaturefromList(max);
+
+
+        ArrayList<Creatures> creatures = new ArrayList<>(); 
+        for (Creatures creature : creatureList) {
+            if (creature.getEvoLevel() == 1 || creature.getEvoLevel() == 2 || creature.getEvoLevel() == 3) {
+                creatures.add(creature);
+            }
+        }
+
+
+
+        Random random = new Random();
+        int randomIndex = random.nextInt(max);
+        return creatures.get(randomIndex);
     }
 
     /*

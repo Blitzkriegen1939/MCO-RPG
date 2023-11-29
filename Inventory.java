@@ -11,8 +11,11 @@ public class Inventory {
     private ArrayList<Creatures> ownedCreatures = new ArrayList<>(); 
     private Creatures activeCreature;       
     private CreatureList creatureList;
-    private char activeCreatureSymbol;
     public Object getActiveCreature;
+    public int c1;
+    public int c2;
+    public int c1l;
+    public int c2l;
 
     /**
      * Gets the list of owned creatures in the inventory.
@@ -89,7 +92,7 @@ public class Inventory {
      * Prints the name of the owned creature at the specified position in the inventory.
      *
      * @param pos The position of the creature in the inventory.
-     */
+     
 
     void printCreatureName (int pos) {
         if (pos >= 0 && pos < ownedCreatures.size()) {
@@ -99,11 +102,11 @@ public class Inventory {
         else {
             System.out.println ("Invalid index or no creature at the specific index.");
         }
-    }
+    }*/
 
     /**
      * Prints the details of creatures in the inventory.
-     */
+     *
     public void printInventory () {
         int i;
 
@@ -120,64 +123,22 @@ public class Inventory {
             System.out.println ("+-------------+-------------+");
         }
         System.out.println();
-    }
+    }*/
 
     /**
      * Allows the player to change the active creature in the inventory.
      */
-    void ActiveCreatureChange () {
-        int size = ownedCreatures.size();
-        boolean valid = false;
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println(activeCreature.getName() + " is currently your active Creature.");
-        System.out.println("Do you wish to change your Active Creature? [y/n]");
-        String input = scanner.next();
-
-        if (input.equalsIgnoreCase("Y")) {
-            System.out.println("What is the position of the pokemon to set as your active Creautre? ");
-            System.out.println("Press [0] to cancel.");
-                while (!valid) {
-                    if (scanner.hasNextInt()) {
-                        int temp = scanner.nextInt();
-                        if (temp == 0) {
-                            System.out.println ("Active Creature change cancelled.");
-                            break;
-                        }
-                        temp--;
-                        if (temp >= 0 && temp < size) {
-                            if (temp != ownedCreatures.indexOf(activeCreature)) {
-                                setActiveCreature(temp);
-                                System.out.println("Active Creature successfully changed to " + ownedCreatures.get(temp).getName());
-                                valid = true;
-                            } else {
-                                System.out.println("The chosen creature is currently your Active Creature. Choose another one.");
-                            }
-                        } else {
-                            System.out.println("Invalid Input. Please enter a valid position.");
-                        }
-                    } else {
-                        System.out.println("Invalid Input. Please enter a valid position.");
-                        scanner.next(); // Consume the invalid input
-                    }
-                }
-        }
-        else if (input.equalsIgnoreCase("N")) {
-            System.out.println("Active Creature is still " + activeCreature.getName() + ".");
-            valid = true;
-        }
-        else {
-            System.out.println("Invalid input. Please enter a valid position.");
-        }
-
-        //scanner.close();
+    void ActiveCreatureChange (int i) {
+        setActiveCreature(i);
     }
+
+
 
     /**
      * Sets the symbol for the active creature.
      *
      * @param symbol The symbol to represent the active creature on the game board.
-     */
+     
     public void setActiveCreatureSymbol(char symbol) {
         this.activeCreatureSymbol = symbol;
     }
@@ -186,45 +147,53 @@ public class Inventory {
      * Gets the symbol for the active creature.
      *
      * @return The symbol representing the active creature.
-     */
+     
     public char getActiveCreatureSymbol() {
         return activeCreatureSymbol;
+    }*/
+
+    public void Creature1(int i){
+        c1 = i;
     }
 
+    public void Creature2(int i){
+        c2 = i;
+    }
+    public void Creature1Location(int i){
+        c1l = i;
+    }
+
+    public void Creature2Location(int i){
+        c2l = i;
+    }
+
+    public int getCreature1(){
+        return c1;
+    }
+
+    public int getCreature2(){
+        return c2;
+    }
+    public int getCreature1Location(){
+        return c1l;
+    }
+
+    public int getCreature2Location(){
+        return c2l;
+    }
+
+    
+
+
     public void evolve(){
-        Scanner scanner = new Scanner(System.in);
+        int index1 = c1l ;
+        int index2 = c2l ;
 
-        System.out.println("Select two creatures to evolve:");
-
-//      creatureList.evolveCreatures(activeCreature);
-
-        // Display the current inventory
-        printInventory();
-
-        System.out.println("============+===========");
-        System.out.println("== Index Starts at 0 ==");
-        System.out.println("============+===========");
-
-        System.out.println("Enter the index of the first creature:");
-        int index1 = scanner.nextInt();
-
-        System.out.println("Enter the index of the second creature:");
-        int index2 = scanner.nextInt();
-
-        // Check if the indices are valid
-        if (isValidIndex(index1) && isValidIndex(index2)) {
             Creatures creature1 = ownedCreatures.get(index1);
             Creatures creature2 = ownedCreatures.get(index2);
 
-            // Check if both creatures are the same
-            if (creature1.getFamily() == creature2.getFamily() && creature1.getEvoLevel() == creature1.getEvoLevel()) {
-                // Check if both creatures are below evolution level 3
-                if (creature1.getEvoLevel() < 3) {
-                    // Evolve the creatures
                     int balls = creature1.getCreatureNumber();
                     Creatures evolvedCreature = creatureList.evolveCreatures(balls);
-
-                    System.out.println(balls);
 
                     // Remove the original creatures from the inventory
                     ownedCreatures.remove(creature1);
@@ -235,17 +204,10 @@ public class Inventory {
 
                     // Sort the inventory after evolution based on creature names
                     Collections.sort(ownedCreatures, Comparator.comparing(Creatures::getName));
-
-                    System.out.println("Evolution successful! " + evolvedCreature.getName() + " has been added to your inventory.");
-                } else {
-                    System.out.println("Evolution failed. Both creatures are already at the maximum evolution level.");
-                }
-            } else {
-                System.out.println("Evolution failed. You can only evolve two identical creatures.");
-            }
-        } else {
-            System.out.println("Invalid indices. Please enter valid indices.");
-        }
+                    
+                    
+                    setActiveCreature(getArrayListSize()-1);
+                    //System.out.println("Evolution successful! " + evolvedCreature.getName() + " has been added to your inventory.");
     }
 
         /**
@@ -254,8 +216,40 @@ public class Inventory {
      * @param index The index to check.
      * @return True if the index is valid, false otherwise.
      */
-    private boolean isValidIndex(int index) {
-        return index >= 0 && index < ownedCreatures.size();
+
+    public String creatureinfo(int i){
+        return  "\nName:"+ getName(i)+
+                "\n Type:"+ getType(i)+
+                "\n Family:"+ getFamily(i)+
+                "\n EL" + getEvoLevel(i);
+    }
+    
+    public String getName (int i)
+    {
+        Creatures owned = ownedCreatures.get(i);
+        return owned.getName();
+    }
+    public String getType (int i)
+    {
+        Creatures owned = ownedCreatures.get(i);
+        return owned.getType();
+    }
+
+    public String getFamily(int i)
+    {
+        Creatures owned = ownedCreatures.get(i);
+        return owned.getFamily();
+    }
+
+    public int getEvoLevel (int i)
+    {
+        Creatures owned = ownedCreatures.get(i);
+        return owned.getEvoLevel();
+    }
+    public int creatureNumber (int i)
+    {
+        Creatures owned = ownedCreatures.get(i);
+        return owned.getCreatureNumber();
     }
 
 }
